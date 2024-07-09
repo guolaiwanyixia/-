@@ -1,0 +1,42 @@
+首次安装配置一次就行 
+git config --global user.name  xxx    设置用户名
+git config --global user.email    xxx    设置邮箱
+
+git init        初始化
+ll -a            查看隐藏文件夹
+cd .git/        进入.git文件夹
+
+ll                 查看文件夹
+git status     查看状态
+vim   xxx     创建一个新文件    按i 进添加状态  
+yy    复制这一行
+p     粘贴
+ctrl + l      清屏
+Esc + dd   删除一行代码
+shift + ；进入命令模式    wq   工作区保存
+shift + ；进入命令模式    q！   退出当前命令
+git add   xxx       暂存区保存  
+git rm --cached  xxx 暂存区的文件删除    （但是工作区文件还在）
+git commit -m"日志信息" xxx       将暂存区提交到本地库
+
+cat   xxx      查看文件内容
+git remote -v  查看别名
+git remote add (你的本地库名字) +（你的github远程库链接）        添加上传地址别名
+
+tail -n 1  xxx  查看末尾的最后一行
+git reflog    查看版本日志信息
+git  log       查看完整日志信息
+git  reset --hard (版本号)     把指针指向你要的版本
+git branch -v                            查看分支
+git branch （新分支名）            创建分支
+git checkout (要切换的分支名)   切换分支
+git merge  （要合并的分支名）  合并分支（把输入的分支内容覆盖到当前分支）
+git push (本地别名) + （分支名）上传到github
+git pull (本地别名) + （分支名）  拉取到github
+git clone （链接）  克隆github远程库文件到本地库
+
+setting->collaborators->add people->pending invite     可以添加团队成员，发送邀请函
+ssh-keygen -t rsa -C（邮箱）      生成公钥和私钥 
+
+
+

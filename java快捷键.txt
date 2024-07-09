@@ -1,0 +1,44 @@
+ctrl  + /             注释快捷键，再次输入 ctrl  + / 就是取消
+tab                    右移
+shift + tab         左移
+
+
+
+idea 快捷键
+ctrl + d            复制当前行往下，一行
+alt + /              补全代码
+alt + enter       错误补全代码
+ctrl +alt + l      自动整理代码
+ctrl +alt + T     选择异常处理
+ctrl +alt + ←    debug的返回上一次
+alt + ins           选择插入语句
+ctrl +  h           查看层级关系
+ctrl + b            定位到方法   也可以查看源码
+ctrl + j             显示所有快捷键的快捷键
+ . var                自动输入变量名
+I                       增强for循环
+
+输入语模板：
+mian       主方法模板
+sout       out语句模板
+fori        循环语句模板
+itit          迭代器模板 
+
+断点调试（debug）
+F7               跳入方法内
+F8               逐行执行代码   
+Shift + F8    跳出方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+

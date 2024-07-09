@@ -1,0 +1,195 @@
+一  、普通模板
+import java.util.Scanner;     
+
+    public class ceyan{
+	public static void main(String[]args){
+
+      Scanner myScanner = new Scanner(System.in);
+
+      System.out.println("1");
+      int text = myScanner.nextInt();
+
+          System.out.println(text);
+	}
+} 
+
+
+
+
+二 、 String类型包，包括equals比较String的使用方法
+import java.util.Scanner;
+public class Break02{
+	public static void main(String[]args){
+		Scanner myScanner= new Scanner(System.in);
+		
+		String usename = "丁真";
+		String password = "666";
+	
+  
+     for(int i=2;i>=0;i--){
+     	System.out.println("请输入用户名");
+     	usename = myScanner.next();
+		System.out.println("请输入你的密码");
+		 password = myScanner.next();
+        
+         if("丁真".equals(usename)&&"666".equals(password)){
+         	    System.out.println("登录成功");
+         	    break;
+         }
+         else{
+         System.out.println("密码或账号错误，还有"+ i + "次机会");
+     }
+
+     }
+     System.out.println("结束程序");
+}
+}
+
+
+数组接收
+Scanner myScanner= new Scanner(System.in);
+		double [] scores = new double[5];
+for(int a =0;a<scores.length;a++){
+	System.out.println("请输入第"+(a+1)+"个值"); 
+	 scores[a] = myScanner.nextDouble();	 	
+}
+for(int a =0;a<scores.length;a++){
+	System.out.println("第"+(a+1)+"个值的数为"+(scores[a])); 	 	 	
+}
+
+
+
+
+
+
+
+
+
+public class ArrayReverse02{
+public static void main(String[]args){
+int []arr1={24,69,80,57,13};
+int copy = 0;
+int a = -1;
+for(int i = 0;i<4;i++){
+	for(int j = 6;j>i;j--){  
+      
+      	a++;
+      
+       if(arr1[a]>arr1[a+1]){
+          copy = arr1[a+1];
+     arr1[a+1] = arr1[a];
+       arr1[a] = copy;
+          a = -1;
+        }
+      //}
+	}
+}
+for(int i = 0;i<arr1.length;i++){
+System.out.println(arr1[i]);	
+}
+
+}
+}	
+
+
+
+
+
+
+public class Homework05{
+	public static void main(String[]args){
+	int []arr=new int[10];
+	int max = 0;
+	int total = 0; 
+	int alltotal = 0;	
+for(int i =0;i<10;i++){	
+arr[i]=(int)(Math.random()* 100)+1;
+     alltotal += arr[i];
+   System.out.println(arr[i]);   
+}
+for(int i =0;i<arr.length-1;i++){
+	
+  if(arr[i]>arr[i+1]){       
+   	if(arr[i]>max){
+      max=arr[i];
+       total=i;
+  }else{
+  	if(arr[arr.length-1]>max){
+  
+      max=arr[arr.length-1];
+       total=i;
+
+   }
+  }
+ }
+}
+System.out.print("最大值" + max+"\n" +"下标为"+ total+"\n"
+	+"平均值为"+ (alltotal/arr.length) );
+
+// for(int i =0;i<10;i++){
+
+// }
+	}
+}
+
+
+异常等
+package com.fanyan.enum_.Homework02;
+
+import java.util.Scanner;
+
+public class homework {
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("注册开始");
+        System.out.println("输入你的用户名");
+        String name = scanner.next();
+        System.out.println("输入你的密码");
+        String pwd = scanner.next();
+        System.out.println("输入你的邮箱");
+        String email = scanner.next();
+        try {
+            user(name,pwd,email);
+            System.out.println("注册成功");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+
+    public static void user(String name, String pwd, String email) {
+        int userL = name.length();
+        if (!(userL >= 2 && userL <= 4)) {
+          throw new RuntimeException("用户名长度为2或3或4");
+        }
+
+        if( !(pwd.length()==6) && isDigital(pwd)){
+            throw new RuntimeException("密码要求为6,要求全是数字");
+        }
+        int i = email.indexOf('@');
+        int j = email.indexOf('.');
+if(!(i>0 && j>i )){
+    throw new RuntimeException("邮箱要包含@和.");
+}
+
+    }
+
+    public static boolean isDigital(String str){
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+       if(chars[i] < '0'||chars[i]> '9'){
+       return false;
+       }
+        }
+
+        return true;
+
+    }
+}
+
+
+
+

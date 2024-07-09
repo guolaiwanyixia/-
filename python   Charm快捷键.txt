@@ -1,0 +1,4 @@
+shift + delete       删除当前行
+Ctrl  + h              查看父类
+Ctrl  + r               替换
+Ctrl  + F               查找

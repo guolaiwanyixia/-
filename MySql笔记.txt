@@ -1,0 +1,289 @@
+数据库管理系统 DBMS（Database manage system ）
+他是可以管理多个数据库，数据库里又有多个表，以保存信息
+
+使用数据库管理系统的操作
+1.创建数据库 
+数据库排序规则
+utf8-general-ci   是不区分大小写
+utf8-bin               区分大小写
+注意取名字的格式
+如果创建的数据库名称和 mysql里的关键字同名，就需要加 `  反引号  “CREATE DATABASE `create`  ”  
+名字不能带-
+如果没有指定  字符集和校验规则   默认utf8 和   默认utf8-general-ci
+指定命令
+create database xxx_dbxx character set utf8   创建一个数据库并指定了字符集    
+create database xxx_dbxx character set utf8 collate utf8_bin   创建一个数据库，指定了字符集并带校验规则
+如果数据库指定了校验规则，那么创建的表默认和数据库一样
+
+
+2.删除数据库
+drop database xxx
+
+3.备份数据库
+要在DOS执行命令行
+mysqldump -u root -p -B ljj_db02 ljj_db03 >指定路径
+备份的文件就是对应的sql语句
+备份库的表
+mysqldump -u root -p密码 ljj_db02 表1 表二 >指定路径
+
+4.恢复数据库
+要进入sql命令行在执行
+mysql -u root -p
+source  备份的文件路径        恢复路径
+
+5.创建表
+create table `user` (id INT,`name` VARCHAR(255),`password` VARCHAR (255),birthday DATA)             创建表
+charset  gbk                 设置字符为utf 8
+ CHARACTER SET utf8    设置字符集为utf 8
+COLLATE utf8_bin         设置校验为utf8_bin  
+engine                         引擎
+设置引擎一般用 innodb 和 myisam
+  DECIMAL(30,20);     30代表30位     20代表 20位小数 
+
+6.在表中添加元素
+insert into 表名 values(大小)      添加指令
+
+7.添加列
+ALTER TABLE   表名  ADD image VARCHAR(32)     添加表名
+NOT NULL DEFAULT''                                           不为空
+AFTER RESUME                                                    在resume后面添加
+8.修改列
+ALTER TABLE   表名 
+ MODIFY job VARCHAR(60) NOT NULL DEFAULT''
+9.删除列
+ALTER TABLE   表名 
+ DROP sex
+10.修改表名
+RENAME TABLE   表名 TO  新表名 
+11.修改字符集
+alter  TABLE  表名  CHARSET    utf8
+12.修改列名
+ALTER TABLE employee CHANGE  `表名`  `新表名` VARCHAR(32)
+ NOT NULL DEFAULT''
+
+insert语句：
+INSERT INTO `goods` (id , good_name , price)
+VALUES(10 ,  '华为手机' ,  2000);
+
+update语句：
+UPDATE employee SET salary = 5000      如果没有带where，就会修改所有的记录、
+
+UPDATE employee SET 
+salary = 3000 
+WHERE user_name = '小妖怪'   指定修改小妖怪的工资为3000
+
+UPDATE employee SET
+salary = salary+1000，job = '出主意的'        修改多行
+WHERE user_name = '老妖怪'          
+
+delete语句：
+DELETE FROM employee     删除指定的
+WHERE id = 300
+
+DELETE FROM employee     把表中全删掉
+     
+select语句:
+SELECT * FROM student     查询表中所有的数据
+SELECT `NAME` ,english FROM student      查询多条指定的数据
+SELECT english FROM student            查询单条指定的数据
+SELECT DISTINCT  english  FROM student        查询不重复的单条指定的数据    必须查询的一列要全部相同才会不显示
+SELECT `name`,(chinese + english +math) FROM student       查询总数可以+
+SELECT `name`,
+(chinese + english +math) AS total_score FROM student      as可以改变对应列的名字
+ SELECT `name` AS '名字',
+(chinese + english +math) AS total_score FROM student                                                       
+SELECT * FROM student WHERE `name` = '赵云'      查询指定的一行数据
+SELECT * FROM student WHERE english>90            查询英语大于90分的数据
+SELECT * FROM student WHERE math>60 AND id > 4                       算术查询
+SELECT * FROM student WHERE english>60 AND id > 4                 
+SELECT * FROM student WHERE english > chinese
+SELECT * FROM student WHERE (chinese+english+math)>200 AND 
+math< chinese AND                                
+`name` LIKE '韩%'    模糊查询
+SELECT * FROM student 
+WHERE english BETWEEN 80 AND 90       查询在两数之间
+WHERE math IN(89,90,91)                        查询指定数
+SELECT * FROM student
+      ORDER BY math                  根据数学的成绩排序 默认升序
+                               ASC            升序
+                              (DESC) 加了这个就是降序    
+ SELECT `name`,(chinese + english + math) AS total_score
+ FROM student WHERE `name` LIKE '韩%'            查询 name列 和 各门成绩相加 并指定一个新的列名total_score，查询student表的name是姓韩的
+          ORDER BY math 
+               
+       
+ 统计函数：
+count (*)   返回满足条件的记录的行数
+count       统计满足条件的某列有多少个，会排除为null 的
+SELECT COUNT(*) FROM student      统计表里有多少人
+SELECT COUNT(*) FROM student where math > 90   统计表里数学成绩大于90的有多少人
+
+sum 求和
+sum 只对数值有效
+SELECT SUM(math) FROM student    所有人的数学成绩的总和
+SELECT SUM(math) AS '数学总成绩',SUM(chinese) AS '语文总成绩' , SUM(english) AS '英语总成绩' FROM student
+SELECT SUM(chinese)/COUNT(*) FROM student        求语文的平均数
+avg  平均分
+SELECT AVG(math) FROM student                               数学的平均分
+SELECT AVG(math+chinese+math) FROM student       所有学科的平均分
+max 和 min
+SELECT MAX(math) ,MIN(math) FROM student        数学的最高分和最低分
+
+group by  + having :
+group by                    分组
+              + having      在分组上进行过滤条件
+SELECT AVG(sal),MAX(sal) ,deptno FROM emp GROUP BY deptno     按 部门分组查询平均数和最高工资
+SELECT AVG(sal),MIN(sal) ,deptno,job FROM emp GROUP BY deptno ,job    先按部门再按工作 分组查询平均数和最低工资
+SELECT AVG(sal),deptno FROM emp GROUP BY deptno HAVING AVG(sal)< 2000      
+SELECT AVG(sal) AS sal,deptno FROM emp GROUP BY deptno HAVING sal< 2000   用别名
+
+字符串相关函数：
+SELECT CHARSET(ename) FROM emp     返回ename的字符集
+SELECT CONCAT(ename,' job is ',job) FROM emp       拼接字符串       把ename+' job is'+job 的内容拼到一起
+SELECT INSTR('hsp','p')FROM DUAL          返回p在 hsp的第几个位置
+SELECT UCASE(ename) FROM emp        转成大写
+SELECT LCASE(ename) FROM emp        转成小写
+SELECT LEFT(ename,2) FROM emp       从ename表的字符每行左边取2个   默认大写
+SELECT RIGHT(ename,2) FROM emp    从ename表的字符每行右边取2个
+SELECT LENGTH(ename) FROM emp   查询ename表每行的字符长度
+SELECT ename,REPLACE(job,'MANAGER','经理') FROM emp      替换    找到job一列，把里面的'MANAGER'替换成 经理
+SELECT STRCMP('hsp','asp') FROM DUAL    比较2个字符串的大小
+SELECT SUBSTRING(ename,1,2) FROM emp      取出ename的1 ，2 位置的字符
+DUAL      亚元表     模拟表
+SELECT LTRIM('  韩顺平教育') FROM DUAL     取出左边的空格
+SELECT RTRIM('韩顺平教育   ') FROM DUAL     取出右边的空格
+SELECT TRIM('   韩顺平教育   ') FROM DUAL     取出两边的空格
+
+数学函数：
+SELECT ABS(-10) FROM DUAL       绝对值
+SELECT BIN(10) FROM DUAL         转成二进制
+SELECT CEILING(1.1) FROM DUAL     向上取整
+SELECT FLOOR(-1.1) FROM DUAL      向下取整
+SELECT CONV(1,10,2) FROM DUAL    进制转换         把1当作10进制看 再转成2进制
+SELECT FORMAT(78.123458,2) FROM DUAL    保留小数，会进行四舍五入      保留2位
+SELECT LEAST(70,2,1,5) FROM DUAL       求当中的最小值    
+SELECT MOD(10,3) FROM DUAL        求余数        取模
+SELECT RAND() FROM DUAL           返回随机数
+SELECT RAND(3) FROM DUAL        返回随机数加种子             就会返回固定的数
+
+日期函数：
+SELECT CURRENT_DATE( )  FROM DUAL     返回当前日期
+SELECT CURRENT_TIME( )  FROM DUAL     返回当前时间
+SELECT CURRENT_TIMESTAMP() FROM DUAL      返回当前时间戳，年月日时分秒
+SELECT NOW()FROM mes            返回当前 年月日时分秒 和时间戳一样
+SELECT * FROM mes WHERE DATE_ADD(               查询十分钟以内的表格信息   
+send_time,INTERVAL 10 MINUTE) >= NOW( )  
+SELECT DATEDIFF('2011-11-11','1990-01-01')FROM DUAL      求相差多少天
+SELECT TIMEDIFF('10:11:11','06:11:11')FROM DUAL             求相差多少时间
+SELECT YEAR(NOW())FROM DUAL               返回当前年
+SELECT MONTH(NOW())FROM DUAL          返回当前月
+SELECT DAY(NOW())FROM DUAL          返回当前日
+SELECT UNIX_TIMESTAMP()FROM DUAL       返回1970-1-1 到现在的秒数
+SELECT FROM_UNIXTIME(1618483484,'%Y-%m-%d') FROM DUAL       把秒数转成'%Y-%m-%d'格式 
+%Y-%m-%d-%H:%i:%s          年月日时分秒 
+
+加密函数：
+SELECT USER()FROM DUAL   查看登录到mysql的用户，以及登录的IP
+SELECT DATABASE()FROM DUAL       查看数据库名称 
+SELECT MD5('hsp')FROM DUAL         为字符串算出一个加密md5  32的字符串
+  SELECT * FROM ljj_user 
+  WHERE `name`='韩顺平' AND pwd = MD5('hsp')    查询某人
+SELECT PASSWORD('hsp') FROM DUAL         加密函数  mysql数据库的用户密码就是PASSWORD函数加密
+SELECT * FROM mysql.user;      查询mysql用户
+
+流程控制函数：
+SELECT IF(TRUE,'北京','上海') FROM DUAL              类似java里的三元运算   真就返回第一个数，
+ SELECT IF(FALSE,'北京','上海') FROM DUAL                                                   假返回第二个数
+ SELECT IFNULL(NULL,'上海') FROM DUAL             第一个为null就返回第二个
+ SELECT CASE                               和if else 用法 差不多
+ WHEN FALSE THEN'jack'                  第一个为真就返回 1 ，1为假 返回 2  ，12都为假就返回最后一个
+ WHEN FALSE THEN 'tom' 
+ ELSE 'mary' END
+ SELECT ename,IF(comm IS NULL,0.0,comm) FROM emp   如果comm是空就返回0.0 否则返回comm
+ SELECT ename,IFNULL(comm,0.0) FROM emp                 和上面一样
+SELECT ename,(SELECT CASE 
+	 WHEN job ='CLERK' THEN '职员' 
+	 WHEN job ='MANAGER' THEN '经理'                 
+	 WHEN job ='SALESMAN' THEN '销售人员' 
+	 ELSE job END) AS 'job'
+	 FROM emp;
+
+查询加强：
+ SELECT * FROM  emp                                  查询再指定时间内的人员
+       WHERE hiredate <= '1992-01-01'
+ SELECT ename, sal FROM emp         查询首字符为s的员工名字和工资
+ WHERE ename LIKE 'S%'
+ SELECT ename, sal FROM emp       查询第3个字符为O的员工名字和工资
+ WHERE ename LIKE '_ _ O%'           
+
+SELECT * FROM  emp            
+WHERE mgr IS NULL           判断某一列的值是否为空用is
+SELECT * FROM emp          从低到高排序
+ ORDER BY sal
+SELECT * FROM emp                   限制3行信息
+ ORDER BY empno LIMIT 0,3;   
+SELECT * FROM emp 
+ ORDER BY empno LIMIT 每页显示的记录数 * (第几页 - 1) ， 每页显示的记录数 ;
+增强group by 的使用
+ SELECT COUNT(*), job FROM emp GROUP BY job      显示各个岗位的的总数
+SELECT COUNT(*),AVG(sal), job FROM emp GROUP BY job      		平均数
+SELECT COUNT(*),COUNT(IF(comm IS NULL,1,NULL))FROM emp      统计空值的人数
+SELECT COUNT(DISTINCT mgr)        DISTINCT是不加相同的数 
+FROM emp;
+SELECT MAX(sal)-MIN(sal)       最大差值
+FROM emp;
+
+
+
+
+
+
+快捷键：
+shift + ctrl + c    注释
+shift + ctrl + r     注销注释
+
+数据库命令：
+> 引导路径
+` xx  ` 反引号   为了规避关键字
+mysql -h 主机名 -P 端口 -u 用户名 -p 密码           启动mysql数据库           注意：P是大写
+column                                          竖列
+row                                                横行
+drop database (数据库名字)             删除数据库
+create database (数据库名字)           创建数据库
+create table 表名 (id INT,`name` VARCHAR(255),`password` VARCHAR (255),birthday DATA)             创建表
+create table 表名 （元素名  指定类型 )  创建表并指定默认（有符号）的类型
+ create table 表名 （元素名  指定类型 unsigned )             创建表并指定无符号的类型
+mysqldump -u root -p -B ljj_db02 ljj_db03 >指定路径          备份数据库
+mysqldump -u root -p密码 ljj_db02 表1 表二 >指定路径       备份数据库的表
+create database xxx_dbxx character set utf8   创建一个数据库并指定了字符集    
+create database xxx_dbxx character set utf8 collate utf8_bin   创建一个数据库，指定了字符集并带校验规则
+select * from 表名 where name ='数据名字'         返回表指定的数据信息
+select * from 表名      返回表的数据信息         
+show databases                              查看所有数据库信息
+show create database (数据库名字)   查看指定数据库的定义信息
+mysql -u root -p                             进入sql命令行
+source  备份的文件路径                   读取并恢复数据库
+insert into 表名 values(大小)            添加指令
+DESC 表名                                      查看所有的列，查询表结构
+
+
+常用数据库（列类型）
+列类型就是数据类型
+1B(Byte 字节)=8bit（位），
+1KB (Kilobyte 千字节)=1024B，
+1MB (Megabyte 兆字节 简称“兆”)=1024KB，
+1GB (Gigabyte 吉字节 又称“千兆”)=1024MB，
+1TB (Trillionbyte 万亿字节 太字节)=1024GB，其中1024=2^10 ( 2 的10次方)，
+
+
+计算范围　
+一位 bit 只能存放 0或1    只能村一个数字，但有两种可能性
+1Byte = 8bit
+能表达的范围2^8 　
+
+
+
+
+
+
+

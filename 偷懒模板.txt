@@ -1,0 +1,22 @@
+a+=b       结束累计数类似 1+2+3+4......   等于总计数器
+
+char  a=97    z=122    A=65  Z=90
+
+ 假设他是arr[ 0 ]      求最大值
+
+重写equaul方法
+ public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Doctor)) {
+            return false;
+        }
+
+           Doctor d = (Doctor) obj;
+
+        return this.name.equals(d.name)&&this.age==d.age
+                &&this.gender == d.gender&&this.job.equals(d.job)
+                &&this.salary == d.salary;
+    }
