@@ -1,0 +1,57 @@
+%          占位符
+%s          字符 
+%d          整数
+%f          浮点小数
+%.2f        保留小数点后2位 
+**             次方            n = 9 ** 2   = 81
+
+
+进制
+0x...           16进制
+0o..            8进制
+0b..            2进制
+
+科学计数法形式
+5.12e2          5.12 × 10的二次方
+5.5E-2           5.12  ÷10的二次方
+
+解决除法精度问题
+from decimal import Decimal           引入Decimal 类          
+b = Decimal("8.1") / Decimal("3")      调用Decimal 赋值给b
+
+
+输出下面的信息：  3个方法都差不多
+1. print("个人信息: %s %d06 %s %.2f" % (name,age,gender,score))   这个是要对应的类型匹配
+
+ format（） 使用
+2.print("个人信息:  { } { } { }" . format(name,age,gender) )     这个不需要对应的类型匹配
+
+3. print(f"个人信息:{name} {age} {score} {gender}")   这个最简单，前面f代表format 简写
+
+abs（x）        x的绝对值
+
+type（x）       x的类型
+print(type(name))
+
+sys.getsizeof(x)    返回x的大小（以字节为单位）
+print(sys.getsizeof(age))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
