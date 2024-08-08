@@ -86,11 +86,23 @@ String.join        用一个界定符 / 隔开拼接的字符串
  a.equal  (b）     检查字符串是否相等     a是否等于b
            查看compareTo方法！！！
 
+String API：  
+s.charAt(n)               返回位置n的代码
+String i = "123";
+System.out.println( i.charAt(1));       返回下标为1的数字 
 
+StringBuilder Builder = new StringBuilder();             构建字符
+        Builder.append("ch");                                     填加字符
+        Builder.append("ane");                              每次添加一部分内容就调用append方法
 
+输入与输出：
+   Scanner scanner = new Scanner(System.in);                  新建构造器
+        System.out.println("what is your name?");                 
+        String name = scanner.next();                                    这个是输入字符（不能含空格）
+        String name = scanner.nextLine();                         这个是输入字符（可以含空格）
+int next = scanner.nextInt();                                     这个是输入 int 类型数字
 
-
-
+System.out.printf("%tc",new Date());                      打印当前时间日期
 
 
 

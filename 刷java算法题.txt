@@ -46,7 +46,19 @@ if ((newRes - i) / 10 != res)        判断是否溢出了32位
 Integer.MAX_VALUE / 10           判断是否溢出了32位  
 【字符串中唯一的字符】
  s.indexOf(s.charAt(i)) == s.lastIndexOf(s.charAt(i)     第一次下标的位置和最后一次下标的位置
+【字符串转换整数】
+如果满足条件 结果 大于31位数，或  等于31并且下一个int大于7就判断溢出
+//数字要在0到9之间，否则就跳过 ，如果不是数字就会忽略掉
+            if(digit < 0 || digit>9 ){               利用ascall码 来去除掉不为0-9数字的数
+               break;
+            }
 
+            if(res >Integer.MAX_VALUE / 10 ||(res ==Integer.MAX_VALUE / 10 && digit > 7)){
+             return sign ==1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }else{
+                //整数算法
+                 res = res * 10 + digit;
+            }
 
 
 一些方法：
@@ -55,7 +67,8 @@ Arrays.toString(nums);    输出数组
 s.toCharArray()               转成char数组
  s.charAt(i)                      转成char
 Map.getOrDefault(2，1)        获取存在的键    存在返回2    不存在返回1    
-
-
-
-
+Character.isLetterOrDigit（）      是一个字母或数字，则返回 true， 如果 不是，则返回 false                                             
+Character.toLowerCase( )         把字母转成小写
+s.trim();                               去掉前后端的空格
+ int digit = s.charAt(index)-'0'   把把字符串转成字符转成整数算法
+res = res * 10 + digit;              查询越界算法          res= 0*10+1      res= 1*10+2    res= 12*10+3     res =123

@@ -1,0 +1,17 @@
+HTTP 和 CSS：
+CSS是控制  页面布局样式效果的
+HTML  是 页面上的内容
+
+HTML文件书写规范：
+<html>                                           表示整个html页面的开始
+<head>                                            头信息
+          <title>标题</title>                  标题
+           <body>                                    body 是页面的主题内容
+                    页面主体内容
+</head>
+</html>                                            表示 整个html页面的开始结束
+
+注释：
+<!--       .....       -->            
+
+
