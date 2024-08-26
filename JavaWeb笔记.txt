@@ -1,17 +1,151 @@
-HTTP 和 CSS：
-CSS是控制  页面布局样式效果的
-HTML  是 页面上的内容
+Server                  S            服务器
+Serve里包含：
+Tomcat[Web服务器 + 容器 ]                             
+Tomcat里包含：
+Web服务
+容器
+
+和 database             db          数据库
+
+browser        简称 b           浏览器
+1.地址 http://www.xx.com/login
+
+B/S架构      前端browser   和服务器端Server组成的系统框架结构
+                  也可理解为web架构，包括 前端 后端 数据库 三大部分
+
+结构HTML                    是网页内容载体，内容就是网页制作者放在页面上想要被用户看见的信息
+           （HyperText Nark-up Language） 超文本标签语言
+
+表现 CSS                       网页的外衣  字体，颜色变化，背景图片，边框等，改变内容外观
+
+行为  JavaScript JQuery    用来实现网页上的特效效果，鼠标滑过弹出的下拉菜单，购物网站的图片轮转有动画
+
 
 HTML文件书写规范：
-<html>                                           表示整个html页面的开始
-<head>                                            头信息
-          <title>标题</title>                  标题
-           <body>                                    body 是页面的主题内容
-                    页面主体内容
-</head>
-</html>                                            表示 整个html页面的开始结束
+<!--          -->
 
-注释：
-<!--       .....       -->            
+<!--文档类型说明 注释-->
+<!DOCTYPE html>
+<!--表示语言的地区 en 表示英国美国-->
+<html lang="en">
+<!--头-->
+<head>
+<!--  设置字符集-->
+  <meta charset="UTF-8">
+<!--  文件标题-->
+  <title>李俊杰</title>
+</head>
+<!--主体内容-->
+<body>
+  hello,韩顺平教育
+
+</body>
+</html>           
+
+
+HTMl 标签 <> 两个 尖括号 括起来
+一般是双标签 <b></b> 前一个是起始标签，后一个为结束标签
+字符实体:
+<hr/>          横线
+<br>       换行
+<h1>标签1</h1>       标签 1是最大字体  依次往后排
+align：                                                                    对齐属性                                  
+align="center"                                                     字符对齐中间
+
+
+
+特殊字符：
+&lt;        文本的< 符号
+&gt;        文本的> 符号            在这两个符号中间 可以写任意字符 都是文本
+&nbsp     空格
+
+&lt;123&gt;
+超链接标签:
+<a>             标签是超链接
+href =" "      属性设置连接
+target=" "    设置哪个目标进行跳转
+_self:            表示把当前页面,替换到超链接 ( 默认值 )
+_blank:         打开并跳转新页面
+<a href="https://www.bilibili.com/" target="_blank">bilibili2</a>
+<a href="mailto:tom@sohu.com" >联系管理员</a>                     发送邮箱
+
+无序列表：
+<ul>                                                   ul： 表示无序
+  <li type="circle">jack</li>                li :   列表项实心圆       type="circle"  表示空心圆
+  <li>tom</li>                                    type属性：指定列表项的符号
+  <li>smith</li>                                            
+  <li>mary</li>                              
+</ul>
+
+有序列表:
+<ol  type="A">                 以字母形式排序
+<ol type="A" start="3">   以C字母形式排序
+
+图像标签：
+<img src="近代史纲要20240513105209.png">   img 图片标签，用来显示图片
+width:           设置宽度
+height:          设置高度
+border="10px"    设置边框
+alt                  如果路径没有找到图片就会显示这个
+<img src="近代史纲要20240513105209.png"width="400" height="1000">  建议只设置一个,系统会自动调整
+
+表格标签：
+tr     行标签
+th     表头标签  
+td     单元格标签
+align   单元格对齐
+b         加粗
+px       像素
+colspan=" "         横行合并yy格子
+rowspan="3"       竖行合并yy格子
+border    边框宽度
+cellspacing          指定单元格空隙
+bordercolor         指定表格边框演示
+height                 指定 高度
+<table width="500px" border="1">          表格标签  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+常用符号：
+ <hr/>                                                                  横线
+<br/>                                                                  换行
+<font  ↓  >xxx</font>                                         颜色
+  color="blue" size="40px" face="微软雅黑"          color 属性 颜色，size 文本大小   ，face  修改字体
+<meta charset="UTF-8">                                    设置字符集
+<h1> xxx 1</h1>                                                标签 1是最大字体  依次往后排
+align：                                                                    对齐属性                                  
+align="center"                                                     字符对齐中间
+.                                                                          表示当前文件所在的目录
+..                                                                          当前目录的上一级目录
+http://Ip地址:port/工程名/资源路径            绝对路径URL     http://localhost:63342/html/.idea/homework/1.png 
+
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

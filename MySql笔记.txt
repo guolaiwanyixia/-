@@ -148,7 +148,7 @@ SELECT RIGHT(ename,2) FROM emp    从ename表的字符每行右边取2个
 SELECT LENGTH(ename) FROM emp   查询ename表每行的字符长度
 SELECT ename,REPLACE(job,'MANAGER','经理') FROM emp      替换    找到job一列，把里面的'MANAGER'替换成 经理
 SELECT STRCMP('hsp','asp') FROM DUAL    比较2个字符串的大小
-SELECT SUBSTRING(ename,1,2) FROM emp      取出ename的1 ，2 位置的字符
+SELECT SUBSTRING(ename,1,2) FROM emp      从1开始计算 ，取出长度为2
 DUAL      亚元表     模拟表
 SELECT LTRIM('  韩顺平教育') FROM DUAL     取出左边的空格
 SELECT RTRIM('韩顺平教育   ') FROM DUAL     取出右边的空格
@@ -233,6 +233,282 @@ FROM emp;
 SELECT MAX(sal)-MIN(sal)       最大差值
 FROM emp;
 
+多子句查询：
+
+语法顺序
+from ...表
+group by  ...   分组
+having   ...      对分组结果过滤
+order by ...     升序排序（默认）
+limit ... , ...      分页
+
+SELECT deptno, AVG(sal) AS avg_sal   统计各个部门的平均工资，并且是大于1000的，                                                           
+       FROM emp                                  并且按照平均工资从高到低排序，并取出前面2行                             
+       GROUP BY deptno
+       HAVING avg_sal>1000
+       ORDER BY avg_sal DESC
+        LIMIT 0,2;
+ 
+多表查询：
+SELECT *  FROM emp,dept       返回2张表的合并数据   表1的行数 * 表2 的行数    也成为笛卡尔集
+SELECT ename,sal,dname,emp.deptno                  如果有两张表的话就使用   .xxx    指定
+      FROM emp,dept WHERE emp.deptno = dept.deptno;
+  SELECT ename,sal,grade FROM emp,salgrade WHERE sal BETWEEN losal AND hisal   查询losal  和 hisal之间的
+ 
+自连接：
+1.把一个表当2个表使用
+2.需要给表取别名
+3.列名不确定，可以指定列的别名 列名 as 列的别名
+SELECT worker.ename AS'职员名',boss.ename AS'上级名' FROM emp worker,emp boss    查询同一个表，并重新指定名字
+WHERE worker.mgr = boss.empno ;
+
+多行子查询：
+SELECT * FROM emp
+                WHERE deptno=(                             查询 显示所有员工 的deptno =  查询到的simith 相同的人的信息
+              SELECT deptno                                   
+       FROM emp WHERE ename = 'SMITH' ) 
+     
+SELECT ename,job,sal,deptno         首先，子查询找出部门编号为10的所有不同职位。
+          然后，主查询选择emp表中所有职位与子查询结果相匹配的记录。
+          最后，通过AND deptno != 10进一步筛选，只保留那些部门编号不等于10的记录。
+     FROM emp 
+        WHERE job IN (
+        SELECT DISTINCT job 
+        FROM emp 
+          WHERE deptno = 10
+        )AND deptno != 10
+
+子查询临时表：
+select cat_id ,max(shop_price)        把cat进行分组，再分出最贵的
+          from ecs_goods
+          group by cat_id
+     
+select goods_id,temp.cat_id,goods_name,shop_price  
+             from(                                                            从from（...）temp 就是个临时表  
+          select cat_id ,max(shop_price) as max_price                  
+          from ecs_goods
+          group by cat_id       
+          )
+          temp, ecs_goods
+          where temp.cat_id = ecs_goods.cat_id 
+          and 
+          temp.max_price = ecs_goods.shop_price
+
+all和any的使用：
+SELECT ename,sal,deptno
+           FROM emp                     用all来表达所有     
+            WHERE sal > ALL(        把all换成any  就是其中的任意一个
+                SELECT sal
+                FROM emp 
+                WHERE deptno = 30              
+            )
+
+多列子查询：
+SELECT * 
+     FROM emp
+     WHERE(
+       deptno,job               返回和子查询相同的信息
+     ) = (
+     SELECT deptno,job 
+     FROM emp 
+     WHERE ename = 'SMITH'
+     )
+表名 .*          把表的所有都列出
+
+表复制和去重：
+INSERT INTO my_tab01                                       把其他表复制进来
+             (id,`name`,sal,job,deptno)
+             SELECT empno,ename,sal,job,deptno 
+                     FROM emp;
+
+ INSERT INTO my_tab01
+                    SELECT * FROM my_tab01;  蠕虫复制     一次加入上一次的2倍
+
+CREATE TABLE my_tab02 LIKE emp        把emp表的列信息复制到 my_tab02
+
+合并查询：
+SELECT ename,sal,job FROM emp WHERE sal > 2500
+UNION ALL                                                                                    合并查询
+SELECT ename,sal,job FROM emp WHERE job = 'MANAGER'
+
+SELECT ename,sal,job FROM emp WHERE sal > 2500
+UNION                                                                                         合并会去重  查询             
+SELECT ename,sal,job FROM emp WHERE job = 'MANAGER'
+
+外连接需求：
+SELECT `name`,stu.id,grade                      select ..from 表1 left join 表2 on 条件
+	FROM stu LEFT JOIN exam         左连接，右侧没有也连接        左连接就是列出左边所有的列
+	ON stu.id = exam.id
+
+主键：
+mysql 约束包括5种  not null ，unique，primary key ,foreign,check
+CREATE TABLE t17
+	(id INT PRIMARY KEY,            primary key 的值是不可以重复的
+	`name` VARCHAR(32),
+	email VARCHAR(32));
+
+	CREATE TABLE t18                
+	(id INT , 
+	`name` VARCHAR(32),
+	email VARCHAR(32),
+	PRIMARY KEY(id,`name`));        符合主键，在尾部写（ primary key）  id和name同时相同才不被添加
+
+CREATE TABLE t21
+	(id INT UNIQUE,                 unique表示不可以重复 可以有多个null
+	`name` VARCHAR(32),            唯一约束
+	email VARCHAR(32));
+
+CREATE TABLE my_stu(
+		id INT PRIMARY KEY ,
+	`name` VARCHAR(32)NOT NULL DEFAULT'',
+	class_id INT,
+	FOREIGN KEY(class_id) REFERENCES my_class(id));        把my_stu设置为外键，class_id和my_class(id)相关联
+                                                                                  先把外表删了才能删除主表
+
+CREATE TABLE t24(
+id INT PRIMARY KEY,
+`name` VARCHAR(32),
+sex VARCHAR(6) CHECK(sex IN('man','woman')),        检查语法在某些范围  但是15.7版本不支持check
+sal DOUBLE CHECK(sal > 1000 AND sal < 2000));
+
+自增长：
+自增长可以单独使用不用主键，但是要保持唯一 配合unique使用
+ALTER TABLE t25 AUTO_INCREMENT = 100;     t25表修改自增长值为100
+CREATE TABLE t24
+	(id INT PRIMARY KEY AUTO_INCREMENT,           一般配合主键+自增长使用
+	email VARCHAR(32)NOT NULL DEFAULT '',        
+	NAME VARCHAR(32)NOT NULL DEFAULT '')
+DESC t24	
+		 
+		INSERT INTO t24                                  第一种格式   
+		VALUES(NULL,'tom@qq.com','tom');
+		
+		INSERT INTO t24 (email,`NAME`)                     第二种格式
+		VALUES('hsp@sohu.com','hsp');
+
+                                         INSERT INTO t25                             可以指定固定的值
+		VALUES(100,'tom@qq.com','tom');
+
+创建索引：
+CREATE INDEX empno_index ON emp(empno)        给指定的列添加索引，加快查询速度      索引会占空间
+CREATE UNIQUE INDEX id_index ON t25(id);      创建索引 名字为id_index在 t25 表的 id 列
+CREATE INDEX id_index ON t25(id);                 创建普通索引          
+ALTER TABLE t25 ADD INDEX id_index(id);        创建普通索引 2
+不会重复的列 优先考虑用UNIQUE 索引
+会重复的列 用普通索引
+
+添加主键索引         ALTER TABLE t26 ADD PRIMARY KEY (id);
+添加唯一索引         CREATE UNIQUE INDEX id_index ON t25(id); 
+添加普通索引         CREATE INDEX id_index ON t25(id); 
+添加普通索引2       ALTER TABLE t25 ADD INDEX id_index(id);
+
+删除索引               DROP INDEX id_index ON t25
+删除主键索引         ALTER TABLE t26 DROP PRIMARY KEY
+修改索引               就是先删除，后添加
+查询索引               SHOW INDEX FROM t26;
+	            SHOW INDEXES FROM t26;
+	            SHOW KEYS FROM t26;
+
+事务：
+要么全部成功，要么全部失败
+开始事务         START TRANSACTION
+                      set autocommit = off
+设置保存点a    SAVEPOINT a
+INSERT INTO t27 VALUES(100,'tom');
+	SELECT* FROM t27
+	SAVEPOINT b
+退回指定保存点             ROLLBACK TO b
+之间退回最初状态          ROLLBACK
+提交事务                      commit             一旦提交，就没有机会回退了
+ InnoDB 存储引擎支持事务
+
+事务隔离级别：
+SELECT @@tx_isolation;             查看当前mysql的隔离级别
+SELECT @@global.tx_isolation;   查看当前系统的隔离级别
+SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED         设置当前会话隔离级别
+SET GLOBAL ....                           设置系统当前隔离级别
+transaction - isolation =  ...         在配置文件当中设置隔离级别
+启动隔离级别
+读未提交    SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;    会产生脏读   不可重复读 和 幻读 
+读已提交    SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;      会产生 不可重复读 和 幻读
+可重复读     SET SESSION TRANSACTION ISOLATION LEVEL Repeatable read;         不会产生   脏读 不可重复读 和 幻读
+可串行化    SET SESSION TRANSACTION ISOLATION LEVEL Serializable;                 有用户操作会占线
+
+mysql表类型和存储引擎：
+SHOW ENGINES         查看引擎engines
+ ALTER TABLE `t29` ENGINE = INNODB       修改存储引擎
+innodb存储引擎  
+1.支持事务
+2.支持外键
+3.支持行级锁
+
+myisam存储引擎  
+1.添加速度快
+2.不支持外键和事务
+3.表级锁
+
+memory存储引擎  
+1.数据存在内存中
+2.执行速度很快
+
+视图：
+创建视图  CREATE VIEW emp_view01
+	AS
+	SELECT empno,ename,job,deptno FROM emp;
+查看创建视图指令   SHOW CREATE VIEW emp_view01
+删除视图         DROP VIEW  emp_view01
+修改视图         UPDATE emp_view01 
+	      SET job = 'MANAGER'
+	      WHERE empno = 7369
+
+管理：
+创建新的用户  CREATE USER 'hsp_edu'@'localhost' IDENTIFIED BY '123456'
+    'hsp_edu'      表示用户的完整信息
+    'localhost'     登录的ip 
+'123456'        密码
+查询用户    SELECT `host`,`user`,`authentication_string` FROM mysql.user
+删除用户     DROP USER 'hsp_edu'@'localhost'
+修改自己的密码         SET PASSWORD = PASSWORD('ljj')
+ 修改指定人的密码     SET PASSWORD FOR 'shunping'@'localhost' = PASSWORD('abc')
+
+权限管理：
+添加权限 GRANT SELECT ,INSERT 
+	ON testdb.news                    给shunping'@'localhost这个人 赋予SELECT 和,INSERT 权力在这表上testdb.news
+	TO 'shunping'@'localhost'
+回收权限 REVOKE SELECT ,INSERT,UPDATE
+	    ON testdb.news
+	  FROM 'shunping'@'localhost'
+
+删除用户 DROP USER 'shunping'@'localhost'
+
+%     代表所有ip连接权限
+指定ip范围     xxx  192.168.1.%
+
+作业:
+" "  =  as  xxx
+不能用<>符号判断null     只能用is  not null
+IFNULL(comm,0)          如果为空就是0, 不为空就是comm
+OR     或者
+ ORDER BY  DESC     降序
+last_day     最后一天
+ DATE_ADD(hiredate,INTERVAL 12 YEAR)        加上12 年
+CONCAT    拼接
+LCASE      转成小写
+SUBSTRING   指定选取字符
+LENGTH(ename)   字符长度
+NOT LIKE '%R%'  名字不带R的人员名单 
+LEFT(ename,3)    取出前三个字符
+REPLACE(ename,'A','a')     替换         把A替换成a
+FLOOR      整数
+round（sal/30） 四舍五入整数
+DATEDIFF(NOW(),hiredate)      减天数       
+WHERE ename LIKE'%A%';        查找单个字符
+GROUP BY        分组
+desc   降序
+WHERE `name` LIKE '李%'         模糊查询
+
+
+
 
 
 
@@ -250,6 +526,7 @@ column                                          竖列
 row                                                横行
 drop database (数据库名字)             删除数据库
 create database (数据库名字)           创建数据库
+SHOW INDEX FROM t25                 查询是否有索引
 create table 表名 (id INT,`name` VARCHAR(255),`password` VARCHAR (255),birthday DATA)             创建表
 create table 表名 （元素名  指定类型 )  创建表并指定默认（有符号）的类型
  create table 表名 （元素名  指定类型 unsigned )             创建表并指定无符号的类型
