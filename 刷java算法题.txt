@@ -72,3 +72,4 @@ Character.toLowerCase( )         把字母转成小写
 s.trim();                               去掉前后端的空格
  int digit = s.charAt(index)-'0'   把把字符串转成字符转成整数算法
 res = res * 10 + digit;              查询越界算法          res= 0*10+1      res= 1*10+2    res= 12*10+3     res =123
+haystack.indexOf(xx );          返回第一个和haystack 相同字母的下标
