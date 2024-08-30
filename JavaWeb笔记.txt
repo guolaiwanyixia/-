@@ -477,6 +477,92 @@ var person = {
   console.log(person.name+person.age)
   person.hi()
 
+事件:
+事件的注册    把button 和 函数关联起来 这个过程就是注册（叫绑定也可以）
+静态注册：在设置的时候就和函数绑定在一起了
+<body onload="sayOK()">    
+
+动态注册：      
+window.onload = function (){                window.onload表示页面被加载完毕   
+   alert("动态注册onload事件")              function ()表示加载完毕后，要执行的代码
+ }
+
+点击事件：
+onclick  点击事件
+
+静态：
+ function sayOK(){
+    alert("静态注册事件sayok")       直接在body里调用 <button onclick="sayOK()">sayOK按钮</button>
+  }
+
+动态：
+<button id="btn01">sayHi</button>                   先写body  
+
+window.onload = function (){                                                先加载页面，调用函数
+ var btn01 = document.getElementById("btn01");                    函数里加载了映射button的对象 
+  btn01.onclick= function (){                                                  通过button对象调用onclick方法
+    alert("sayHi")                                                                       把函数要输出的东西和 按钮绑定   
+  }
+}
+
+失去焦点事件：
+onblur    失去焦点事件
+
+静态绑定：
+<input type="text" id="fname" onblur="upperCase()">     先写body      onblur="upperCase() 调用函数显示
+
+  function upperCase(){                                                       写函数
+       var fname = document.getElementById("fname");         得到input的对象
+       fname.value = fname.value.toUpperCase();                  调用对象里的value 得到输入框的值，然后调用toUpperCase()转成大写
+                                                                                           然后再发给  fname.value 输入框内             
+   }
+动态绑定：
+<input type="text"  id="fname2" >      先写body
+
+ window.onload = function (){                                                先加载页面，调用函数        
+        var fname2  = document.getElementById("fname2")     得到input的对象
+         fname2.onblur = function (){                                        调用对象里的onblur 方法 并绑定一个函数 
+           fname2.value = fname2.value.toUpperCase();             函数和上面静态方法一样
+          
+         }
+
+
+内容发生改变事件： 
+
+onchange    改变事件
+静态：
+function mysal(){                        先写function
+  alert("工资变化了")
+}
+
+
+<select onchange="mysal( )">                       调用 onchange="mysal()
+  <option>--工资范围--</option>
+  <option>2k-5k</option>
+  <option>5k-10k</option>
+  <option>10k以上</option>
+</select><br/>
+
+动态：
+
+ window.onload = function (){
+  var sel01 = document.getElementById("sel01")
+   sel01.onchange = function (){
+     alert("工zuo变化了")
+   }
+ }
+
+
+表单提交事件：
+
+
+
+
+
+
+
+
+
 
 
 
