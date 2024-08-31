@@ -714,7 +714,7 @@ top  纵坐标
 <div id="cock" style="left: 200px;position:absolutel;top: 200px; ">
   <img src="2.bmp" border="1" alt="">
 
-
+XML:
 
 
 
