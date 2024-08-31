@@ -554,18 +554,165 @@ function mysal(){                        先写function
 
 
 表单提交事件：
+静态：
+onsubmit
+
+<form action="OK.html" onsubmit="return register( )">            调用提交事件，并返回绑定的 register( ) 函数
+
+function register(){     
+ var username = document.getElementById("username")         通过名字得到对象
+  var pwd = document.getElementById("pwd");                           
+  if ("" == username.value || ""== pwd.value){                          判断输入框内 不能为空
+  alert("用户名或密码不能为空")                                                 为空返回 False 给事件
+    return false;
+  }
+return true
+}
+
+动态：
+  <form action="OK.html"  id = "form2">     先写 id  
+
+window.onload = function (){
+  
+var form2 = document.getElementById("form2");            通过id调用form对象
+  form2.onsubmit = function (){                                       对象再调用事件      
+     if(form2.username.value=="" | |form2.pwd.value==""){      通过调用对象里的  username，pwd 的对话框 的内容 的判断是否为空 
+       alert("用户名或密码不能为空")
+       return false;
+     }
+     return true
+  }
+}
+
+注册用户作业：
+  window.onload = function (){
+    var from = document.getElementById("from");
+    from.onsubmit = function (){
+         if(!(from.username.value.length>=4 && from.username.value.length<=6)){
+        alert("用户长度(4-6)不满足")
+           return  false
+         }
+        if(from.pwd.value.length != 6){
+        alert("密码长度(6)不满足")
+          return  false
+      }
+       if( from.pwd.value != from.pwd2.value){
+        alert("两次密码不相等")
+         return  false
+      }
+     var emailPattern= /^[\w-]+@([a-zA-Z]+\.)+[a-zA-Z]+$/      通过正则表达式来检查格式是否正确
+      if(!emailPattern.test(from.email.value)){
+           alert("不满足邮箱格式")
+        return false
+      }
+
+
+      return true
+
+    }
+  }
+
+
+<h1>注册用户</h1><br>
+<form id="from" action="OK.html">
+用户名:<input name="username">用户长度(4-6)<br>
+密　码:<input name="pwd">密码长度(6)<br>
+确　认:<input name="pwd2"><br>
+电　邮:<input name="email"><br>
+<input type="submit" value="注册用户">
+<input type="reset" value="重新输入">
+
+dom介绍：
+dom就是实现功能
+Document Object Model    文档对象模型
+
+应用实例：
+function a(){
+  var myHeader = document.getElementById("myHeader");
+  alert(myHeader.innerText)             显示文本
+  alert(myHeader.innerHTML)            显示页面上的文本
+
+}
 
 
 
+应用实例2：
+
+<input type="checkbox" name="sport" value="zq" checked="checked">足球        3个勾选框必须名字要一样才能是为一组的
+<input type="checkbox" name="sport" value="tq">台球
+<input type="checkbox" name="sport" value="ppq">乒乓球
+<br>
+<button onclick="selectAll()">全选</button>
+<button onclick="selectNone()">全不选</button>
+<button onclick="selectReverse()">反选</button>
 
 
+ function selectAll(){
+      var sports = document.getElementsByName("sport");                通过名字得到 sport 的集群对象
+      for (var i = 0; i < sports.length; i++) {                               通过checked  默认选中函数来遍历集群对象
+        sports[i].checked = true;
+      }
 
 
+    }function selectNone(){
+    var sports = document.getElementsByName("sport");
+    for (var i = 0; i < sports.length; i++) {
+      sports[i].checked = false;
+    }
+
+    }function selectReverse(){
+    var sports = document.getElementsByName("sport");
+    for (var i = 0; i < sports.length; i++) {
+         sports[i].checked = !sports[i].checked                       把得到的结果反选，再赋给自己       很聪明的方法
+
+    }
+
+应用实例3：
+function changImgs() {
+
+    var img = document.getElementsByTagName("img");
+    if (but1.value =="查看多少猫/并切换成狗") {
+      alert("猫的数量是" + img.length)
+      for (var i = 0; i < img.length; i++) {
+        img[i].src = "猫狗图片/" + (i + 4) + ".png"
+      }
+        but1.value = "查看多少狗/并切换成猫"
 
 
+    } else if (but1.value =="查看多少狗/并切换成猫") {
+        alert("狗的数量是" + img.length)
+        for (var i = 0; i < img.length; i++) {
+          img[i].src = "猫狗图片/" + (i+1) + ".png"
+        }
+      but1.value = "查看多少猫/并切换成狗"
 
+      }
+    }
+}
 
+应用实例4：                       创建小猫
+  function addImg(){
+      var img = document.createElement("img");         通过 调用dom 来定义一个标签，但不影响静态html的内容
+    img.src = "猫狗图片/1.png";                                    相当于不展示在body中，用内存
+img.width = "100";                                           
+      document.body.appendChild(img)                     把定义的src 传给body.appendChild 里
 
+  }
+
+  }
+}
+
+乌龟吃鸡游戏：
+style="position: absolute;   绝对定位
+left  横坐标
+top  纵坐标
+
+<div id="wugui" style="position: absolute;left:100px;top: 120px; ">
+  <img src="1.bmp" border="1" alt="">
+
+</div>
+<div id="cock" style="left: 200px;position:absolutel;top: 200px; ">
+  <img src="2.bmp" border="1" alt="">
 
 
 
