@@ -714,7 +714,97 @@ top  纵坐标
 <div id="cock" style="left: 200px;position:absolutel;top: 200px; ">
   <img src="2.bmp" border="1" alt="">
 
-XML:
+XML:           文件类型
+描述层级关系
+
+格式：
+1. xlm 表示文件类型 
+2.version 版本
+3.encoding   文件编码
+4.students     root元素，根元素
+5.student      是students的子元素
+6.id就是属性  name ,age,gender  是student  元素的子元素   
+
+
+<?xml version="1.0" encoding="utf-8" ?>  
+<students>
+    <student id="100">
+        <name>jack</name>
+        <age>10</age>
+        <gender>男</gender>
+    </student>
+
+    <student id="200">
+        <name>mary</name>
+        <age>18</age>
+        <gender>女</gender>
+    </student>
+</students>
+
+xml格式：
+中间如果要加‘ , ”        " x ' x "   ,   ' x " x '
+如果想要把内容当作文本 格式：↓
+                            <![CDATA[  xxx    ]]>
+
+
+
+转移符:
+&lt              <
+&gt             >
+&amp         &
+&quot          "
+&apos          '
+
+
+
+Dom4j_     在java程序里调用xml： 
+SAXReader reader = new SAXReader();      创建一个解析器
+Document document = reader.read(new File("src/student.xml"));          通过xml得到对应的dom对象
+ Element rootElement = document.getRootElement();                        通过dom对象得到对应的元素
+Element student=(Element) rootElement.elements("student").get(0);  得到 student  标签对象
+student.attributeValue("id")      通过 标签对象 得到对应的id
+
+
+
+Tomcat:
+先模拟一个tomcat，自己创建一个服务器接收：
+ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务器端口号为9999
+        while (!serverSocket.isClosed()) {                  如果serverSocket 没关闭就一直循环
+            System.out.println("等待连接...");            
+            Socket socket = serverSocket.accept();                服务器等待接收信息
+            OutputStream outputStream = socket.getOutputStream();     输出流
+            outputStream.write("hello,iamtomcat".getBytes());                 输出字符串给连接上的那个客户端
+        }
+       
+
+我先去复习IO：
+1.文件输入流 和 文件输出流 
+ File inpuyStream   and  File  outputStream  只能用byte[ ] 发送
+ outputStream 写入文件时   内容时会覆盖原来的内容
+可以在一开始的 new FileOutputStream（路径，true）  后面加一个true 代表 要追加写入， 不写默认是覆盖
+
+1.1 在自己电脑上一个盘上 传大文件 到另一个盘 
+ 先输入在输出
+确定好输入输出 路径  
+File inpuyStream 输入进来 立马 FileOutputStream   输出
+
+2. 文件字符流
+FileReader       读写字符内容，接收的是int类型     如果要在屏幕上输出时，要转成char
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
