@@ -776,6 +776,12 @@ ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务
             outputStream.write("hello,iamtomcat".getBytes());                 输出字符串给连接上的那个客户端
         }
        
+我先去复习oop 继承和多态 ：
+子类可以直接调用父类的公共方法
+
+
+
+
 
 我先去复习IO：
 1.文件输入流 和 文件输出流 
@@ -790,12 +796,14 @@ File inpuyStream 输入进来 立马 FileOutputStream   输出
 
 2. 文件字符流
 FileReader       读写字符内容，接收的是int类型     如果要在屏幕上输出时，要转成char
+fileReader.read( )   是单字符读取 
+用char[ ] 进行多个字符读取
+"你好啊".toCharArray ( ) , 0 , 2  把字符串转成char数组 取
+fileWriter.flush();  相当于刷新
+fileWriter.close();  相当于刷新并关闭，最好用close           
+         这两个都可以关闭流
 
-
-
-
-
-
+节点流是和上面一样，都是处理特定的一个数据源读写数据
 
 
 

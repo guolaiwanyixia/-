@@ -10,6 +10,9 @@ vmtools工具：
 CD / XXX     进入到xxx目录下
 ls     检查目录下有什么
 tar -zxvf  xxx       z是解压方式，x是解压意思，f是要解压的文件名字，v是展示解压细节
+ifconfig         查看ip            测试可以用window 的命令段  输入 ping + ip  检查网络是否能连通
+rebot        重启电脑
+
 
 在linux里面一切皆文件
 linux目录结构：
@@ -30,12 +33,74 @@ linux目录结构：
 /dev                   把所有的硬件用文件的形式存储
 /media                存储一些设备   U盘 光驱等
 /mnt                   让用户临时挂载别的文件系统
-/opt                    主机额外  安装的软件  所摆放的目录
-/usr/local             安装完了的文件的目录
+/opt                    主机额外  安装的软件  所摆放的目录  安装包
+/usr/local             安装完了的   源文件的目录   源文件
 /var                    存放不断扩充的东西，比如日志
 /selinux       security-enhanced linux   安全子系统
 /
 /
+
+
+vi  vim  常用的三种模式：        就是linux 下面的文本编辑器
+正常模式：
+vim + xxx   进入正常模式 
+创建xxx文件
+
+插入模式：   
+输入 i    o    ..... 进入插入模式   
+写入程序
+ 
+
+命令行模式：
+按 esc 退出到正常模式     在输入：
+
+：wq     = write quit     写入并退出
+：q    退出
+：q！强制退出，不保存
+yy     拷贝当前行       5yy  拷贝下面的5行
+p       paste   粘贴     
+dd     删除当前行     5dd  删除下面的5行
+/hello     查找 当前页面 有没有 hello这个字符串     按 n  向下查找
+：set nu  显示文件行数
+：set 不显示文件行数
+g       把光标移动到末行
+shift+g      把光标移动到首行
+u       撤销        类似window的   ctrl + z
+数字+ shift +g    可以把光标快速跳转到对应行数
+
+关机 & 重启命令
+shutdown -h  now   立刻关机
+shutdown -h  1        一分钟后关机   数字可以调  
+shutdown                默认1分钟后关机 
+shutdown -c               取消关机
+shutdown -r  now     现在重启计算机
+halt                         关机
+reboot                    现在重启
+sync                        把内存数据同步    ！！！ 每次关机和重启都要写这个指令
+
+用户的登录和注销：
+su - 用户名       在控制台输入  是切换账号
+logout             退出当前的
+
+用户管理：
+cd /home -> ls  查看普通用户管理
+useradd  xxx     添加一个x普通用户
+useradd  -d /home/xxx   xx     指定一个地址xxx  添加一个xx普通用户
+passwd  xx       设置/修改密码给xx普通用户
+userdel  xx        删除登录用户
+userdel -r  xx    删除登录用户的所有资料文件
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -58,9 +123,6 @@ pwd   显示当前的工作目录
 
 命令分隔符：
 /   路径的起点
-
-
-
 
 
 
