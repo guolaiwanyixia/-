@@ -766,26 +766,30 @@ student.attributeValue("id")      通过 标签对象 得到对应的id
 
 
 
-Tomcat:
-先模拟一个tomcat，自己创建一个服务器接收：
-ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务器端口号为9999
-        while (!serverSocket.isClosed()) {                  如果serverSocket 没关闭就一直循环
-            System.out.println("等待连接...");            
-            Socket socket = serverSocket.accept();                服务器等待接收信息
-            OutputStream outputStream = socket.getOutputStream();     输出流
-            outputStream.write("hello,iamtomcat".getBytes());                 输出字符串给连接上的那个客户端
-        }
-       
+Tomcat:   
 我先去复习oop 继承和多态 ：
 子类可以直接调用父类的公共方法
+父类可以接收子类的对象
+系统会先执行父类构造器，再执行子类
+构造器里有this  就不能有super了
+在多态里面 向上转型只能调用重写的方法，不能调用特有的
+子类可以调用父类的所有方法和属性，父类可以重写子类的方法  向上转型
+向上转型    Base base = new A
+base.xxx      调用的就是A里面的xxx，如果没有就会找父类的 base方法
+属性没有重写之说
+   
+向下转型 A a  =（A) base    应为base在上面是A类的引用类型 
+private extend_ extend = new B( );
 
-
+ B b = (B)extend;       
+        b.base2();                如果是重写的话，就可以直接拿extend .base2 ( )  ,反之则得向下转型在调用
+        extend.base();
 
 
 
 我先去复习IO：
 1.文件输入流 和 文件输出流 
- File inpuyStream   and  File  outputStream  只能用byte[ ] 发送
+ File inpuyStream   and  File  outputStream  只能用byte[ ] 发送   字节
  outputStream 写入文件时   内容时会覆盖原来的内容
 可以在一开始的 new FileOutputStream（路径，true）  后面加一个true 代表 要追加写入， 不写默认是覆盖
 
@@ -795,7 +799,7 @@ ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务
 File inpuyStream 输入进来 立马 FileOutputStream   输出
 
 2. 文件字符流
-FileReader       读写字符内容，接收的是int类型     如果要在屏幕上输出时，要转成char
+FileReader       读写字符内容，接收的是int类型     如果要在屏幕上输出时，要转成char      图片声音视频是二进制文件
 fileReader.read( )   是单字符读取 
 用char[ ] 进行多个字符读取
 "你好啊".toCharArray ( ) , 0 , 2  把字符串转成char数组 取
@@ -804,6 +808,33 @@ fileWriter.close();  相当于刷新并关闭，最好用close
          这两个都可以关闭流
 
 节点流是和上面一样，都是处理特定的一个数据源读写数据
+处理流也叫包装流，
+
+
+BufferedReader   and  Bufferewriter   字符char 来读取的
+关闭的时候只需要关闭外层流就行了
+这两个都是处理字符文件的
+
+
+BufferedInputStream   and   BuffereOutputStream
+用来处理字节的文件      比如 图片  音乐 视频 pdf ...   二进制的东西  
+
+bs  browser Server  通过浏览器来接收服务器        易用，兼容差
+cs   Client Server      自己编写客户端                   安全    银行的软件  ，qq
+装了什么 服务就叫什么   服务器     装了mysql  就叫mysql服务器，装了javaWeb 就是javaWeb 服务器
+ 
+
+先模拟一个tomcat，自己创建一个服务器接收：
+ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务器端口号为9999
+        while (!serverSocket.isClosed()) {                  如果serverSocket 没关闭就一直循环
+            System.out.println("等待连接...");            
+            Socket socket = serverSocket.accept();                服务器等待接收信息
+            OutputStream outputStream = socket.getOutputStream();     输出流
+            outputStream.write("hello,iamtomcat".getBytes());                 输出字符串给连接上的那个客户端
+        }
+
+
+
 
 
 
