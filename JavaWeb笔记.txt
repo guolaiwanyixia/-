@@ -824,6 +824,9 @@ cs   Client Server      自己编写客户端                   安全    银行
 装了什么 服务就叫什么   服务器     装了mysql  就叫mysql服务器，装了javaWeb 就是javaWeb 服务器
  
 
+Tomcat：
+
+
 先模拟一个tomcat，自己创建一个服务器接收：
 ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务器端口号为9999
         while (!serverSocket.isClosed()) {                  如果serverSocket 没关闭就一直循环
@@ -833,11 +836,16 @@ ServerSocket serverSocket = new ServerSocket(9999);           创建一个服务
             outputStream.write("hello,iamtomcat".getBytes());                 输出字符串给连接上的那个客户端
         }
 
+他是监听是在8080监听的
+netstat -anb             查看是什么本机软件在监听
+8009 是监听关闭指令
 
+tomcat的文件和图片得引用到 tomcatapp下
+一次请求返回一个资源
+localhost 在网页上不输入：xxx  默认端口是80
 
-
-
-
+ctrl + shift + a   添加框架
+deployment部署 里面要写     person2是你部署的名字              http://localhost:8080/person2/person.html
 
 
 
