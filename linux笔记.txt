@@ -18,19 +18,19 @@ rebot        重启电脑
 linux目录结构：
 常用的   
 /bin      是binary的缩写    二进制的    这个目录存放着常用的命令
+/boot    存放linux启动时的核心文件
+/dev                   把所有的硬件用文件的形式存储
+/etc       系统管理所需要的配置文件 都放在这 
 /sbin     是super User的缩写    这个目录存放的是系统管理员的命令          使用的系统管理程序
 /home   存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般以用户名命名
 /root     该目录为系统管理员的主目录
 /lib        系统开机时的最基本的动态连接库，作用类似于window里的dll文件
 /lost +found   这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件
-/etc       系统管理所需要的配置文件 都放在这 
 /usr       安装的文件会在这里
-/boot    存放linux启动时的核心文件
 /proc [不能动]     这个目录是一个虚拟的目录，他是系统内存的映射
 /srv [不能动]        该目录存放一些服务启动之后需要的数据
 /sys [不能动]        这是linunx2.6内核的一个很大的变化 
 /tmp [不能动]      这个目录是用来存放一些临时文件  
-/dev                   把所有的硬件用文件的形式存储
 /media                存储一些设备   U盘 光驱等
 /mnt                   让用户临时挂载别的文件系统
 /opt                    主机额外  安装的软件  所摆放的目录  安装包
@@ -89,6 +89,57 @@ useradd  -d /home/xxx   xx     指定一个地址xxx  添加一个xx普通用户
 passwd  xx       设置/修改密码给xx普通用户
 userdel  xx        删除登录用户
 userdel -r  xx    删除登录用户的所有资料文件
+
+查询用户信息：
+id root  查询用户信息
+su - xxx   切换用户
+who am i    查询登录用户 的名称和 登录时间     看虚拟机上登录的是谁    输入whoami  也可以，但只显示名称
+
+用户组：
+groupadd + 组名       添加组名
+groupdel + 组名       删除组名
+useradd -g 用户组 用户名      直接在添加用户的时候添加到对应的组
+usermod -g 用户组 用户名     修改用户的组
+
+用户相关的配置文件：
+/etc/passwd 文件
+用户user  的配置文件 ，记录用户的各种信息
+/etc/shadow  文件
+口令的配置文件
+/etc/group  文件
+组的配置文件，纪录linux包含的组的信息
+
+指定运行级别：
+0 关机
+1 单用户[找回丢失密码]
+2 多用户状态没有网络服务
+3 多用户状态有网络服务
+4 系统未使用保留给用户
+5 图形界面
+6 系统重启
+常用的级别是3和5 ，也可以指定默认运行级别
+
+命令 init[0123456]  :通过init 来切换不同的运行级别，比如动5-3
+systemctl get-default        查看当前级别
+systemctl set-default multi-user.target
+multi-user.target             设置永久3级别
+systemctl set-default graphical.target  设置永久5级别
+
+找回root密码：
+在开机界面中按E键，进入选项框，找到Linux16 的最后一行输入init=/bin/sh
+输入ctrl + x 进入单用户模式
+再输入 mount -o remount,rw /
+输入passwd 修改密码
+再输入touch /.autorelabel      输入exec /sbin/init
+
+
+帮助指令：
+man ls             获得帮助信息
+ls -a                查看隐藏文件
+ls -l              单列输出      再输出下面  ls -la   or     ls-al
+
+文件目录指令：
+
 
 
 
