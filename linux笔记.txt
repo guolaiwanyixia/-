@@ -21,10 +21,12 @@ linux目录结构：
 /boot    存放linux启动时的核心文件
 /dev                   把所有的硬件用文件的形式存储
 /etc       系统管理所需要的配置文件 都放在这 
-/sbin     是super User的缩写    这个目录存放的是系统管理员的命令          使用的系统管理程序
 /home   存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般以用户名命名
-/root     该目录为系统管理员的主目录
 /lib        系统开机时的最基本的动态连接库，作用类似于window里的dll文件
+/sbin     是super User的缩写    这个目录存放的是系统管理员的命令          使用的系统管理程序
+
+/root     该目录为系统管理员的主目录
+
 /lost +found   这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件
 /usr       安装的文件会在这里
 /proc [不能动]     这个目录是一个虚拟的目录，他是系统内存的映射
@@ -139,8 +141,108 @@ ls -a                查看隐藏文件
 ls -l              单列输出      再输出下面  ls -la   or     ls-al
 
 文件目录指令：
+绝对路径和相对路径
+绝对路径
+例如：/home/tom/ .txt      写出完整路径
+ 
+相对路径
+例如：现在 在tom就从tom下的路径找           / .txt    
+pwd     显示当前你在的目录的绝对路径
+ls    查看当前目录下的所有文件和目录包括隐藏的
+l    以列表方式显示信息
+cd ~   直接到自己家 /root 
+cd .. 回到上级目录
+
+文件目录类：
+mkdir     创建单级目录 mkdir /home/dog
+mkdir -p    创建多级目录 mkdir /home/dog/xxx
+rmdir     删除指定空目录
+rm -rf   删除整个目录
+touch   创建一个空文件
+
+拷贝文件：
+cp 指定拷贝文件到指定目录
+source dest
+-r    递归复制整个文件夹
+
+cp xxx  /xxx2        把x复制到x2 目录下
+cp -r /xxx /xxx2 /opt/     把整个/xxx /xxx2 /目录 复制到opt  目录下
+\cp -r /xxx /xxx2 /opt/   强制覆盖
+
+rm指令：
+rm /xxx/xxx 删除文件夹或文件
+rm -rf /xxx/xxx   强制删除文件夹或文件 
+
+mv 指令：
+mv cat.txt pig.txt     把cat 改成pig    换名字
+mv pig.txt /root      把pig 移动到root目录下
+mv cat2.txt /home/cat.txt       把当前目录的cat2 移动到home下 并 且改成cat名字
+
+cat指令：
+cat   查看文件
+-n    显示行号
+cat -n /etc/profile    查看文件内容，并显示行号
+            cat只能展览文件，不能修改文件
+cat -n /etc/profile |more    more   管道命令    按回车可以一页一页翻   按空格可以翻页
+more 指令：
+more /etc/profile        查看文件 
+q   离开
+ctrk + f  向下滚动一屏
+       + b  返回向上一屏
+=          输入当前行的行号
+:f          输入文件名和当前行的行号       
+
+less指令：
+lees指定并不是一次将整个文件加载显示，而是根据显示需要加载内容
+page 键上下 翻页
+/ 字符串  向下查找文字     n向下查找    N向上查找
+? 字符串  向上查找文字
+q  离开
+ 
+echo指令：
+输出内容到控制台
+echo $HOSTNAME      输出 主机名字
+echo "hello,world!"       输出  "hello,world!"  这段字
+
+head指令：
+head xx         查看文件的前十行
+head -n5 xx         查看文件的前5行
+
+tail指令：
+tail  xx         查看xx文件的后十行
+tail -n5  xx         查看xx文件的后5行
+tail -f  xx         实时监控xx文件
+
+指令>   >>：
+>      输出重定向          把echo “123” > hello.txt     把echo要输出到屏幕上的123，写入的内容会覆盖hello 
+>>    追加                    在原先的内容上又加入 新信息
+ls -l  >  可以覆盖
+cat xx >  查看的命令都可以覆盖 
+...
 
 
+
+ln 指令：
+ln -s[ 原文件 或 目录]
+ln -s /root/ /home/myroot      把root的 快捷方式 建在home myroot下面
+ll     查看详细列表
+
+history指令：
+history   查看历史执行过的命令
+ ！编号     执行之前的命令
+
+时间日期类：
+date   日期
+date "+%Y-%m-%d %H:%M:%S"        显示年月日时分秒
+date +%Y       年
+date +%m      月
+date +%d       日
+date -s "2020-10-03 20:20:20"       设置时间
+cal                  日历
+cal  2024       查看一年的日历
+
+查找命令：
+find  
 
 
 
