@@ -242,13 +242,39 @@ cal                  日历
 cal  2024       查看一年的日历
 
 查找命令：
-find  
+ find   查找
+find  /home -name hello.txt                              按home下面的 hello.txt查找
+find /opt -user root                                          查找属于指定用户名所有的文件
+find / -size +200    （+n 大于  -n小于  n等于）   这里是+ ，所有是查找大于200M的文件
 
+locate指令：
+第一次使用必须updatedb   
+指令创建locate数据库        形成自己的数据库 优化速度
 
+which 指令：
+查看系统命令，在哪个盘下面
 
+grep指令 和管道符号| ：
+grep过滤查找，管道符 |   
+cat hello.txt |grep "pp"       查看并查找hello.txt 里面含有  pp字符的地方
+ cat hello.txt |grep -n "pp"    n是显示行号
+                            -i              忽略字母大小写
 
+gzip / gunzip 指令：             适合于单个文件的压缩
+gzip nihao.txt                把 nihao.txt 文件压缩
+gunzip nihao.txt.gz        把 nihao.txt 文件解压
+ -d 解压目录
 
+zip和unzip 指令：             更适合于创建包含多个文件和目录
+zip -r myhome.zip /home/        把home 解压 成  myhome.zip文件
+unzip -d /tep /myhome.zip        把myhome.zip 解压到 tep 下面
 
+tar指令：
+tar -zcvf pc.tar.gz /pig.txt /cat.txt      把pig.txt 和 cat.txt  解压成 pc.tar.gz
+tar -zcvf myhome.tar.gz /home/       把home/ 解压成 myhome.tar.gz
+tar -zxvf pc.tar.gz              解压
+tar -zxvf /myhome.tar.gz -C  /opt/tmp2       把myhome.tar.gz  解压到   opt/tmp2  下面去
+                                       -C是指定文件目录
 
 
 
@@ -276,6 +302,57 @@ pwd   显示当前的工作目录
 
 命令分隔符：
 /   路径的起点
+
+指令：                             
+ls -ahl                                  查看文件所有者、或者 l l
+蓝色代表目录，白色代表文件
+chown tom apple.txt            修改文件所有者         
+chgrp fruit orange.txt           修改文件组名   
+usermod -g wudang zwj       修改用户组名
+
+rwx权限
+-rw-r--r--. 1 root root   102 9月   5 15:19 Hello.java
+...
+0-9位说明：  
+l 是连接         link
+d 是目录      directory
+c 是字符     character
+b 是块设备         block
+r  是可读          read
+w  是可写         write
+x  可执行      execute                                 
+
+0位确定文件类型
+1-3位确定所有者  （该文件的所有者）拥有该文件的权限--User
+4-6位确定所属组 （同用户组的） 拥有该文件的权限--Group
+7-9位    确定其他用户拥有该文件的权限 --Other
+
+1是 root子目录 数量
+
+102是 字节数
+
+9月   5 15:19   日期
+
+Hello.java    文件名
+
+修改权限 -chmod
+u       所有者  user
+g       所有组 group
+o       其他人 other
+a       所有人  all  （u g o的总和）
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
