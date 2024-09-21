@@ -340,11 +340,91 @@ u       所有者  user
 g       所有组 group
 o       其他人 other
 a       所有人  all  （u g o的总和）
+chmod  u=rwx , g=rx , o=x 文件 / 目录名  
+chmod  o+w   给w权限
+chmod  o-w    去掉w权限
+文件是绿色代表可执行
+
+1代表 执行                     x
+2代表  写入                     w
+4代表  读                        r
+
+3代表   执行+写入           wx
+5代表   读+执行               r x 
+6代表   写入+读写           r w
+7代表   执行+写入+读写   r w x
+
+修改所有者：
+创建文件       touch  xxx.txt
+mkdir     创建单级目录 mkdir /home/dog
+mkdir -p    创建多级目录 mkdir /home/dog/xxx                 p 是    parents”（父目录）是指所有父级目录
+
+chown tom /home/abc     把abc这个文件的所有者改成tom
+ chown -R tom kkk          把kkk文件夹下的 所有文件    的所有者 改成tom
+修改文件所在组：
+groupadd shaolin    创建组
+chgrp shaolin kkk      把kkk   的组改成    shaolin
+chgrp -R shaolin bbb        把bbb文件夹下面所有文件   的组改成    shaolin
+
+游戏：
+groupadd police;  groupadd bandit                    创建2个组
+userdel -r jack;  userdel -r jerry                           删除2个用户
+useradd -g police jack; useradd -g police jerry    添加2个用户
+passwd xh         设置密码
+su - jack              切换用户
+Ctrl + Z   挂起当前程序
+usermod -g police xh      修改用户的组
+chmod g+w jack.txt        修改. .权限
+chmod 760 wukong        修改.用户.权限    得到home下面才能修改 ，不然得带上 /home/wukong
+  要有执行权限才能进入别的用户
+
+./aa.txt     查询文件修改记录
 
 
+任务调度 crond  
 
+crontab  进行任务的设置
+          指在某个时间执行的特定的命令或程序
+-e  编辑定时任务
+-l  查询任务
+-r  删除当前用户所有任务
 
+ls -l /etc/ > /tmp/to.txt
+crontab
 
+*/1 * * * * ls -l /etc/ > /tmp/to.txt         每1分钟把etc 文件夹的内容 覆盖到tmp的to.txt文件里 
+第一个*是分钟  依次是    小时，天，月，  第五个特殊 一周当中的星期几  0-7     0和7都代表星期天  1是星期一....
+
+*  第一个*代表任何时间  代表每分钟都执行一次的意思
+，代表不连续的时间    0 8,12,16 * * *   代表8点0分   ，12点0分，16 点0分 都执行一次命令
+-  代表连续的时间范围 比如 0 5 * * 1-6   周一到周六凌晨5点0分执行命令
+*/n    代表每隔多久执行一次  */10 * * * * 命令  ，代表每隔10分钟就执行一边命令
+
+执行脚本
+编写xx.sh
+输入vim  xx.sh
+写入 
+date >> /home/mycal
+cal >> /home/mycal
+./my.sh    执行shell 脚本      手动触发一次
+
+crontab -e        进入编辑
+*/1 * * * * /home/my.sh        输入代码每分钟执行my.sh脚本  
+service crond restart           重启任务调度
+
+at定时任务         只需要执行一次定时
+ps -ef |grep atd      查看进程   筛选atd
+atd 是守护线程 没过60秒就会查看      系统 队列里有没有等待执行的指令 ，每个任务只会执行一次
+
+at命令格式：
+at [ 选项 ] [ 时间 ]
+Ctrl + D  结束 at 命令的输入
+
+at xxxx  +  xxx   多长时间后执行  回车输入
+输入要执行的命令   xxxx      完成后输入2次 Ctrl + D 
+
+atq   查看系统中有没有执行的任务
+atrm 编号   删除等待执行的指令
 
 
 
