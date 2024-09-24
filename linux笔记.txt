@@ -427,6 +427,137 @@ atq   查看系统中有没有执行的任务
 atrm 编号   删除等待执行的指令
 
 
+linux 分区： 
+lsblk   查看设备挂载硬盘情况          
+lsblk -f  详细查看
+linux的硬盘分为IDE 和 SCSI   ，目前基本都是SCSI硬盘
+IDE硬盘标识  hd x~    ~代表分区 前四个分区用数字1-4表示，主分区或扩展分区，从5开始就是逻辑分区
+ hda3 表示为第一个ide硬盘上的第三个主分区 或扩展分区   
+ hdb2 表示为第二个ide硬盘上的第2个主分区 或扩展分区   
+
+SCSI硬盘标识 sd x~        和上面一样
+
+fdisk /dev/sdb      进入分区操作
+按M进入菜单项目
+m 写入
+w 保存并退出
+lsblk   查看
+要格式化 
+格式化磁盘  分区命令： mkfs -t ext4 /dev/sdb1
+新建一个文件夹 mkdir newdisk
+mount /dev/sdb1 /newdisk     把sdb1 挂载到 newdisk上
+umount      ....                 把sdb1 从newdisk上卸载
+
+但是命令行形式的挂载 重启之后就没了
+就需要永久挂载
+  进入 vim /etc/fstab   编辑永久挂载命令
+/dev/sdb1                                 /newdisk                ext4          defaults        0                                 0                 输入命令      
+输入要挂载的硬盘                      挂载的位置              系统类型      默认的挂载选项  表示不需要备份     不需要在启动时检查这个文件系统
+
+
+
+磁盘情况查询：
+s 指定  目录占用大小汇总
+h 带计量单位
+a 含文件
+c 列出明细的同时增加会总量
+
+df -h      磁盘使用情况    如果写这个默认查询当前的目录
+du -h        指定目录的磁盘占用情况,默认是显示当前目录全部文件占用情况
+du -h --max-depth=1 /opt     指定目录占用情况  --max-depth=1  子目录深度
+         --max-depth=2            子目录深度的子目录深度
+du -ha --max-depth=1 /opt      查看包含子目录和文件
+du -hac --max-depth=1 /opt     查看包含子目录和文件 和 汇总量
+
+ls -l /opt | grep "^-"       用正则表达式来过滤查找条件
+ls -l /opt | grep "^-"  | wc -l      用正则表达式来找条件, 并统计查找出来的数量
+ls -l /opt | grep "^d"  | wc -l
+ls -lR  /opt | grep "^d" | wc -l       R是查找所有子目录
+
+tree            树状 目录   如果没有就用 yum install tree
+    这里出了一个问题显示 [Errno 30] 只读文件系统: '/var/cache/yum/x86_64/7/base/repomd.xml.old.tmp'
+     未解决   不知道怎么弄 
+
+今天又找到问题了 ,是挂载文件系统状态 是只读状态,
+修改以下
+ 输入  mount -o remount,rw /          重新挂载为读写模式
+就可以执行系统的读写命令了
+ls -ld /boot    查看boot  权限 
+后面又 发现   重启之后又没了  ,   
+又发现永久更改的 , 
+在   进入 vim /etc/fstab   编辑永久挂载命令        中添加   /dev/sda2   /   ext4    defaults    1 1
+重启之后就好了
+
+
+
+
+
+
+
+
+
+
+
+
+Linux 网络配置原理:
+ifconfig                 查询网络ip配置           ---  在window下查看就是   :ipconfig   
+NAT网络配置 :    虚拟机->本机->  网卡 ->----->路由器 -> 网线 ------ 公网 ....
+
+vim /etc/sysconfig/network-scripts/ifcfg-ens33   打开网络配置
+
+自动分配:
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="dhcp"              dhcp  就是自动分配            改成static  静态 
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="ens33"
+UUID="4aefadcf-15a3-483d-b609-b46997acbc83"
+DEVICE="ens33"
+ONBOOT="yes"
+------------------
+静态分配:
+BOOTPROTO=static         改掉
+------------------
+#IP地址
+IPADDR=192 · 168． 200 · 130  
+#网关
+GATEWAY=192 . 168，200，2
+#域名解析器
+DNSI=192 ． 168 ．200 ． 2
+
+到虚拟网络编辑器里面改掉网段     192.168.1.0  改成  192.168.200(这是网段 必须要和主机的网段 一样) . 0   
+修改完重启网络 或 重启 虚拟机
+
+service  network restart         or    reboot 
+
+
+
+设置主机名和映射:
+   修改主机名字  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
