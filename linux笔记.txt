@@ -539,23 +539,67 @@ service  network restart         or    reboot
 
 
 
-设置主机名和映射:
+设置主机名和映射:   
    修改主机名字  
+C:\Windows\System32\drivers\etc   在windows 上修改 
+192.168.200.130  hsp       以后ping hsp  就自动找到 对应 ip
+ipconfig /displaydns       查询dns域名解析缓存
+ipconfig /dlushdns         手动清理dns缓存
+
+DNS                    Domain Name System
+
+1.主机域名解析,先从浏览器找缓存, 
+2.没有再去主机的dns缓存里找
+3.再去hosts里找 ip 和域名
+4.再去互联网dns解析
+5.没找到  返回 域名未存在
+
+进程的基本介绍:
+每一个进程都分配一个id好 叫   PID  
+top       q 退出          查看进程
+
+ps  -aux    终端的进程
+   a   显示当前终端的所有信息
+   u   用户的格式显示进程信息
+   x   显示后台进程运行的参数
+
+ps详解:
+指令：ps —aux | grep  xxx   看看有没有sshd服务
+指令说明
+System V展示风格
+USER 用户名称
+PID  进程号
+%CPU       进程占用cpu的百分比
+%MEM     进程占用物理内存的百分比
+VSZ           进程占用的 虚拟 内存的大小
+RSS            进程占用的 物理 内存的大小
+TT             终端名称缩写
+STAT    进程状态 其中S睡眠
+s          表示进程是会话的先导进程，
+N         表示进程 拥有比普通优先级更低
+R           正在运行，
+D          等待，
+Z          僵死进程，
+T            被停止
+STARTED          进程的启动时旬
+TIME                   CPU时间 即进程使用（PU的总时间
+COMMAND        启动进 亓用的命令和参数 如果过长会被截断显示
 
 
+父子进程:
 
-
-
-
-
-
-
-
-
-
-
-
-
+/ ps -ef是以全格式显示当前所有的进程
+/ -e        显示所有进 ·f全格式
+/ ps -ef | grep xxx
+是BSD风格
+UID       用户ID
+PID       进程ID
+PPID     父进程ID
+C           CPU用算执先级的因子
+STIME    进程启动的时间
+TTY        完整的终端名称
+TIME      CPU时间
+CMD      启动进程所用的命令 参数
 
 
 
