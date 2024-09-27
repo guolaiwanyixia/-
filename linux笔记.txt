@@ -601,9 +601,16 @@ TTY        完整的终端名称
 TIME      CPU时间
 CMD      启动进程所用的命令 参数
 
+终止进程:          sshd 远程服务
 
+kill      进程号
+killall  + 进程名称           终止所有的指定  名称的进程
+/bin/systemctl start    sshd.service     重启sshd服务
+sshd  是外面的shell
+bysh  是Linux里面的shell
+-9   + 进程名称              强制停止
 
-
+查看进程树 :
 
 
 
