@@ -1,0 +1,25 @@
+youtube-dl -F "https://www.youtube.com/watch?v=Nwf141Yaqcc&t=1s"         查看下载选项
+youtube-dl -f 399 "https://www.youtube.com/watch?v=Nwf141Yaqcc&t=1s"
+
+yt-dlp -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=qnfZX1t-56o" -o '%(title)s.%(ext)s'
+查看可以格式:
+yt-dlp --cookies cookies.txt --list-formats "https://www.bilibili.com/video/BV16hyzYcES9/?spm_id_from=333.999.0.0&vd_source=2f6872394cd6ab830cd71319a6c2c4ad"
+
+yt-dlp --cookies cookies.txt -f 'bv*[height=1080]+ba' "https://www.bilibili.com/video/BV1JvyTYuE7i/?spm_id_from=333.337.search-card.all.click&vd_source=2f6872394cd6ab830cd71319a6c2c4ad" -o '%(title)s.%(ext)s'
+
+暂停视频:
+yp-dlp continue -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=qnfZX1t-56o" -o '%(title)s.%(ext)s'
+下载视频和声音:
+yt-dlp -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=qnfZX1t-56o" -o '%(title)s.%(ext)s' --merge-output-format mp4
+
+
+
+
+1.查看可以下载选项
+yt-dlp "https://www.youtube.com/watch?v=Nwf141Yaqcc&t=2s" --list-formats
+2.下载最好的视频和声音:
+yt-dlp -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=Tk_EBNLyqxw" -o '%(title)s.%(ext)s' --merge-output-format mp4
+3.下载指定的的视频和声音:
+yt-dlp -f "298+140" "https://www.youtube.com/watch?v=Tk_EBNLyqxw" -o '%(title)s.%(ext)s' --merge-output-format mp4
+
+yt-dlp -f "298+140" "https://www.youtube.com/watch?v=Tk_EBNLyqxw" -o 'D:/1abc/%(title)s.%(ext)s' --merge-output-format mp4
