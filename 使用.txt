@@ -11,15 +11,13 @@ yt-dlp --cookies cookies.txt -f 'bv*[height=1080]+ba' "https://www.bilibili.com/
 yp-dlp continue -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=qnfZX1t-56o" -o '%(title)s.%(ext)s'
 下载视频和声音:
 yt-dlp -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=qnfZX1t-56o" -o '%(title)s.%(ext)s' --merge-output-format mp4
-
-
+WANGLIHONG/123
 
 
 1.查看可以下载选项
-yt-dlp "https://www.youtube.com/watch?v=Nwf141Yaqcc&t=2s" --list-formats
+yt-dlp "https://www.youtube.com/watch?v=QeJ5jGq2TG8" --list-formats
 2.下载最好的视频和声音:
 yt-dlp -f 'bestvideo+bestaudio' "https://www.youtube.com/watch?v=Tk_EBNLyqxw" -o '%(title)s.%(ext)s' --merge-output-format mp4
-3.下载指定的的视频和声音:
-yt-dlp -f "298+140" "https://www.youtube.com/watch?v=Tk_EBNLyqxw" -o '%(title)s.%(ext)s' --merge-output-format mp4
+3.到指定位置打开cmd,下载指定的的视频和声音:
+yt-dlp -f "136+140" "https://www.youtube.com/watch?v=QeJ5jGq2TG8" -o 'D:/1abc/%(title)s.%(ext)s' --merge-output-format mp4
 
-yt-dlp -f "298+140" "https://www.youtube.com/watch?v=Tk_EBNLyqxw" -o 'D:/1abc/%(title)s.%(ext)s' --merge-output-format mp4

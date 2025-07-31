@@ -611,6 +611,18 @@ bysh  是Linux里面的shell
 -9   + 进程名称              强制停止
 
 查看进程树 :
+pstree  
+-p  显示进程号
+-u  
+
+服务管理:
+守护进程是监听
+service network status     查看网络配置设备状态
+service network start     打开网络配置设备
+service network stop     关闭网络配置设备
+set up                          窗口化设置     空格键选择       tab 下一行
+
+服务级别:
 
 
 
